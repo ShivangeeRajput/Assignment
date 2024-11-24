@@ -11,10 +11,8 @@ import com.example.expensetracker.data.Transaction
 import kotlinx.android.synthetic.main.item_transaction.view.*
 
 class TransactionAdapter(
-    private val onClick: (Transaction) -> Unit
-) : ListAdapter<Transaction, TransactionAdapter.TransactionViewHolder>(DIFF_CALLBACK) {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionViewHolder {
+    private val onClick: (Transaction) -> Unit) : ListAdapter<Transaction, TransactionAdapter.TransactionViewHolder>(DIFF_CALLBACK) {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionViewHolder {
 
            val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_transaction, parent, false)
