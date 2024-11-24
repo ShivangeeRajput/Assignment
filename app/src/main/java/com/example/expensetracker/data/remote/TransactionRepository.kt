@@ -1,18 +1,36 @@
 package com.example.expensetracker.data.remote
-
 import com.example.expensetracker.data.Transaction
-import com.google.firebase.database.DatabaseReference
-import javax.inject.Inject
-import javax.inject.Singleton
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 
-@Singleton
-class TransactionRepository @Inject constructor(
-    private val db: DatabaseReference
-) {
-    suspend fun addTransaction(transaction: Transaction) {
-        val transactionId = db.push().key ?: return
-        db.child("transactions").child(transactionId).setValue(transaction)
+object TransactionRepository {
+
+    private val transactions = MutableStateFlow<List<Transaction>>(emptyList())
+
+    fun getTransactions(): Flow<List<Transaction>> {
+        return transactions
     }
 
-    fun getTransactions() = db.child("transactions").get().await()
+    suspend fun addTransaction(transaction: Transaction) {
+        val currentList = transactions.value.toMutableList()
+        currentList.add(transaction)
+        transactions.emit(currentList)
+    }
+
+    suspend fun deleteTransaction(transactionId: String) {
+        val currentList = transactions.value.toMutableList()
+        currentList.removeAll { it.id == transactionId }
+        transactions.emit(currentList)
+    }
+
+    suspend fun updateTransaction(updatedTransaction: Transaction) {
+
+        val currentList = transactions.value.toMutableList()
+        val index = currentList.indexOfFirst { it.id == updatedTransaction.id }
+        if (index != -1) {
+            currentList[index] = updatedTransaction
+            transactions.emit(currentList)
+        }
+    }
 }
+
