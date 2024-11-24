@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/dashboardFragment">
+
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.example.expensetracker.ui.fragments.dashboard.DashboardFragment"
+        android:label="Dashboard"
+        tools:layout="@layout/fragment_dashboard">
+        <action
+            android:id="@+id/action_dashboardFragment_to_recordExpenseFragment"
+            app:destination="@id/recordExpenseFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_transactionDetailsFragment"
+            app:destination="@id/transactionDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/recordExpenseFragment"
+        android:name="com.example.expensetracker.ui.fragments.recordexpense.RecordExpenseFragment"
+        android:label="Record Expense"
+        tools:layout="@layout/fragment_record_expense">
+        <action
+            android:id="@+id/action_recordExpenseFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/transactionDetailsFragment"
+        android:name="com.example.expensetracker.ui.fragments.transaction.TransactionDetailsFragment"
+        android:label="Transaction Details"
+        tools:layout="@layout/fragment_transaction_details">
+        <action
+            android:id="@+id/action_transactionDetailsFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment" />
+        <action
+            android:id="@+id/action_transactionDetailsFragment_to_recordExpenseFragment"
+            app:destination="@id/recordExpenseFragment" />
+    </fragment>
+</navigation>
