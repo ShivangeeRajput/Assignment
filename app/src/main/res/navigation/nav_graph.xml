@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/recordExpenseFragment"
-        android:name="com.example.expensetracker.ui.fragments.recordexpense.RecordExpenseFragment"
+        android:name="com.example.expensetracker.ui.fragments.transaction.RecordExpenseFragment"
         android:label="Record Expense"
         tools:layout="@layout/fragment_record_expense">
         <action
@@ -33,11 +33,22 @@
         android:name="com.example.expensetracker.ui.fragments.transaction.TransactionDetailsFragment"
         android:label="Transaction Details"
         tools:layout="@layout/fragment_transaction_details">
-        <action
-            android:id="@+id/action_transactionDetailsFragment_to_dashboardFragment"
-            app:destination="@id/dashboardFragment" />
+        <argument
+            android:name="type"
+            app:argType="string" />
+        <argument
+            android:name="date"
+            app:argType="string" />
+        <argument
+            android:name="description"
+            app:argType="string" />
+        <argument
+            android:name="amount"
+            app:argType="float" />
         <action
             android:id="@+id/action_transactionDetailsFragment_to_recordExpenseFragment"
             app:destination="@id/recordExpenseFragment" />
     </fragment>
+
+
 </navigation>
