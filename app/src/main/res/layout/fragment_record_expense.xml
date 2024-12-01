@@ -21,9 +21,13 @@
             app:title="Record Expense"
             app:titleTextColor="@android:color/white" />
     </com.google.android.material.appbar.AppBarLayout>
+
+
     <RadioGroup
+        android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <RadioButton
@@ -39,25 +43,27 @@
             android:text="Income" />
     </RadioGroup>
 
+    <TextView
+        android:id="@+id/tvDateLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date:"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
 
-        <TextView
+        <Button
+            android:id="@+id/btnPickDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Date: " />
-
-        <ImageButton
-            android:id="@+id/btnPickDate"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:text="Pick Date"
             android:layout_gravity="center_vertical"
-            android:background="?attr/selectableItemBackground"
-            android:contentDescription="Pick Date"
-            android:src="@drawable/calender" />
+            android:layout_marginEnd="16dp" />
 
         <TextView
             android:id="@+id/tvSelectedDate"
@@ -65,21 +71,35 @@
             android:layout_height="wrap_content"
             android:text="Select a date"
             android:textSize="16sp"
-            android:layout_gravity="center_vertical"
-            android:textColor="@color/black" />
+            android:textColor="@android:color/black"
+            android:layout_gravity="center_vertical" />
     </LinearLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description:"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp" />
 
     <EditText
         android:id="@+id/etDescription"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:hint="Description" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Amount:"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp" />
 
     <EditText
         android:id="@+id/etAmount"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:hint="Amount"
         android:inputType="numberDecimal" />
 
@@ -90,5 +110,4 @@
         android:layout_height="wrap_content"
         android:text="Save"
         android:layout_marginTop="16dp" />
-
 </LinearLayout>

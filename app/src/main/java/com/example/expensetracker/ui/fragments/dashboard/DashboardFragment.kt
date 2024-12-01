@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +17,8 @@ import com.example.expensetracker.adapter.TransactionAdapter
 import com.example.expensetracker.data.Transaction
 import com.example.expensetracker.data.remote.TransactionRepository
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class DashboardFragment : Fragment() {
 
@@ -43,14 +45,17 @@ class DashboardFragment : Fragment() {
         }
 
         setupSearch()
-        loadTransactions()
+        observeTransactions()
 
         return view
     }
 
-    private fun loadTransactions() {
-        val transactions = TransactionRepository.getTransactions()
-        transactionsAdapter.submitList(transactions)
+    private fun observeTransactions() {
+        lifecycleScope.launch {
+            TransactionRepository.getTransactions().collectLatest { transactions ->
+                transactionsAdapter.submitList(transactions)
+            }
+        }
     }
 
     private fun setupSearch() {
@@ -59,10 +64,14 @@ class DashboardFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
                 val query = s.toString()
-                val filteredList = TransactionRepository.getTransactions().filter {
-                    it.description.contains(query, ignoreCase = true)
+                lifecycleScope.launch {
+                    TransactionRepository.getTransactions().collectLatest { transactions ->
+                        val filteredList = transactions.filter {
+                            it.description.contains(query, ignoreCase = true)
+                        }
+                        transactionsAdapter.submitList(filteredList)
+                    }
                 }
-                transactionsAdapter.submitList(filteredList)
             }
         })
     }
@@ -72,7 +81,7 @@ class DashboardFragment : Fragment() {
             type = transaction.type,
             date = transaction.date,
             description = transaction.description,
-            amount = transaction.amount.toString()
+            amount = transaction.amount
         )
         findNavController().navigate(action)
     }

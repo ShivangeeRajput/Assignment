@@ -13,7 +13,7 @@ import com.example.expensetracker.R
 
 class TransactionDetailsFragment : Fragment() {
 
-    private val args: TransactionDetailsFragment by navArgs()
+    private val args: TransactionDetailsFragmentArgs by navArgs()
 
     private lateinit var tvTransactionType: TextView
     private lateinit var tvTransactionDate: TextView
@@ -28,12 +28,14 @@ class TransactionDetailsFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_transaction_details, container, false)
 
+        // Initialize views
         tvTransactionType = view.findViewById(R.id.tvTransactionType)
         tvTransactionDate = view.findViewById(R.id.tvTransactionDate)
         tvTransactionAmount = view.findViewById(R.id.tvTransactionAmount)
         tvTransactionDescription = view.findViewById(R.id.tvTransactionDescription)
         btnEdit = view.findViewById(R.id.btnEdit)
         btnDelete = view.findViewById(R.id.btnDelete)
+
 
         setupData()
         setupActions()
@@ -42,6 +44,7 @@ class TransactionDetailsFragment : Fragment() {
     }
 
     private fun setupData() {
+
         tvTransactionType.text = args.type
         tvTransactionDate.text = args.date
         tvTransactionAmount.text = "₹${args.amount}"
